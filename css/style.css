@@ -49,15 +49,16 @@ html >::-webkit-scrollbar-track-piece {
   background: transparent;
 }
 html >::-webkit-scrollbar-thumb {
-  background: #2196f3;
+  background: #4285f4;
   cursor: pointer;
   border-radius: 2px;
 }
 html >::-webkit-scrollbar-thumb:hover {
-  background: #ff5722;
+  background: #673ab7;
 }
 body {
-  background-color: #f4f4f4;
+  cursor: url("https://cdn.jsdelivr.net/gh/TRHX/CDN-for-itrhx.com@2.1.6/images/mouse.cur"), auto;
+  background-color: #efefef;
   text-rendering: optimizelegibility;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   line-height: 1.65;
@@ -3779,7 +3780,7 @@ div.hoverbox:hover >div.target {
   font-size: 0.875rem;
 }
 .white-box {
-  background: #f6f6f6;
+  background: #fff;
 }
 .reveal {
   visibility: hidden;
