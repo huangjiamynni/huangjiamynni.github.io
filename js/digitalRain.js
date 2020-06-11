@@ -1,4 +1,11 @@
 window.onload = function(){
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0a0b8c2540282b20f046dec5c090038e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
     //获取画布对象
     var canvas = document.getElementById("canvas");
     //获取画布的上下文
