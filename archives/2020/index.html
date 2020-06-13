@@ -340,9 +340,142 @@
         
           
         
+          
+        
       
     
     
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box shadow reveal ">
+  
+
+
+  <section class='meta'>
+    
+      
+      
+      <div class="meta" id="header-meta">
+        
+          
+  <h2 class="title">
+    <a href="/2020/06/13/npm%E5%B8%B8%E7%94%A8%E6%96%B9%E5%BC%8F/">
+      npm常用方式
+    </a>
+  </h2>
+
+
+        
+        <div class='new-meta-box'>
+          
+            
+          
+            
+              
+<div class='new-meta-item author'>
+  <a href="https://xaoxuu.com" target="_blank" rel="nofollow noopener">
+    <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3324278405,2511104257&fm=11&gp=0.jpg">
+    <p>伊萨格</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+
+            
+          
+            
+              <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Jun 13, 2020</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+
+            
+          
+            
+              
+
+            
+          
+        </div>
+        
+          <hr>
+        
+      </div>
+    
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="npm使用方式"><a href="#npm使用方式" class="headerlink" title="npm使用方式"></a>npm使用方式</h1><h3 id="1-npm常用命令"><a href="#1-npm常用命令" class="headerlink" title="1.npm常用命令"></a>1.npm常用命令</h3><ul>
+<li><p>npm init</p>
+<ul>
+<li>npm init -y  //可以跳过向导，快速生成 </li>
+</ul>
+</li>
+<li><p>npm install</p>
+<ul>
+<li>npm install //一次性把 dependencies选项中的依赖全部安装</li>
+<li>npm install 包名</li>
+<li>npm install 包名 –save //下载并且保存依赖</li>
+<li>简写:npm i 包名 -S 或者npm i  -S 包名</li>
+</ul>
+</li>
+<li><p>npm uninstall 包名</p>
+<ul>
+<li>只删除，如果有依赖项依然会保存</li>
+</ul>
+</li>
+<li><p>npm uninstall –save 包名</p>
+<ul>
+<li>删除同时把依赖信息也去除</li>
+<li>简写：npm un -S 包名</li>
+</ul>
+</li>
+<li><p>npm help</p>
+<ul>
+<li>npm install help //查看install使用帮助</li>
+</ul>
+</li>
+</ul>
+<h3 id="解决-npm-被墙的问题"><a href="#解决-npm-被墙的问题" class="headerlink" title="解决 npm 被墙的问题"></a>解决 npm 被墙的问题</h3><p>npm 的存储包放在国外，有时候会被墙，所以下载速度很慢，可以下载 cnpm解决</p>
+<p>安装淘宝的cnpm(在任意目录下都可以):</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https:<span class="comment">//registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来你安装包的时候把之前的 <code>npm</code> 替换成 <code>cnpm</code></p>
+<p>使用案例，比如安装jquery：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm i jquery</span><br><span class="line"><span class="comment">//变为</span></span><br><span class="line">cnpm i jquery</span><br></pre></td></tr></table></figure>
+
+<p>如果不想安装 <code>cnpm</code> 又想使用淘宝的服务器来下载:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install jquery --registry=https:<span class="comment">//registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
+
+<p>但是每次都这样手动去加很麻烦，我们可以把这个选项加入配置文件中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="keyword">set</span> registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后使用 <code>npm config list</code>  查看配置信息，成功后你使用所有的 <code>npm install</code> 都会使用淘宝的服务器来下载。</p>
+
+      
+    </div>
+    
+      
+    
+  </section>
+</article>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -373,8 +506,8 @@
               
 <div class='new-meta-item author'>
   <a href="https://xaoxuu.com" target="_blank" rel="nofollow noopener">
-    <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/avatar/avatar.png">
-    <p>Mr. X</p>
+    <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3324278405,2511104257&fm=11&gp=0.jpg">
+    <p>伊萨格</p>
   </a>
 </div>
 
@@ -458,8 +591,8 @@
               
 <div class='new-meta-item author'>
   <a href="https://xaoxuu.com" target="_blank" rel="nofollow noopener">
-    <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/avatar/avatar.png">
-    <p>Mr. X</p>
+    <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3324278405,2511104257&fm=11&gp=0.jpg">
+    <p>伊萨格</p>
   </a>
 </div>
 
@@ -551,7 +684,7 @@
     
       
         <a class='avatar flat-box' href='/about/'>
-          <img no-lazy src='https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/avatar/avatar.png'/>
+          <img no-lazy src='https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3324278405,2511104257&fm=11&gp=0.jpg'/>
         </a>
       
     
