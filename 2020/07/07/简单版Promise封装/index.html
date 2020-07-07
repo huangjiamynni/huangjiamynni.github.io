@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head hexo-theme='https://volantis.js.org/#2.6.6'>
+<head hexo-theme='https://volantis.js.org/#1.0.3'>
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
@@ -16,7 +16,7 @@
 
   <!-- 页面元数据 -->
   
-    <title>新建文档 - 伊萨格</title>
+    <title>简单版Promise封装 - 伊萨格</title>
   
   
 
@@ -91,7 +91,7 @@
           
           
           
-            伊萨格 <b><sup style='color:#3AA757'>2.6.6</sup></b>
+            伊萨格 <b><sup style='color:#3AA757'>1.0.3</sup></b>
           
         </a>
       
@@ -343,8 +343,8 @@
         
           
   <h1 class="title">
-    <a href="/2020/06/10/%E6%96%B0%E5%BB%BA%E6%96%87%E6%A1%A3/">
-      新建文档
+    <a href="/2020/07/07/%E7%AE%80%E5%8D%95%E7%89%88Promise%E5%B0%81%E8%A3%85/">
+      简单版Promise封装
     </a>
   </h1>
 
@@ -357,7 +357,7 @@
             
               
 <div class='new-meta-item author'>
-  <a href="https://xaoxuu.com" target="_blank" rel="nofollow noopener">
+  <a href="https://yisage.cn" target="_blank" rel="nofollow noopener">
     <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3324278405,2511104257&fm=11&gp=0.jpg">
     <p>伊萨格</p>
   </a>
@@ -374,7 +374,7 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Jun 10, 2020</p>
+    <p>发布于：Jul 7, 2020</p>
   </a>
 </div>
 
@@ -397,7 +397,26 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-          
+          <h3 id="函数作为参数传给函数"><a href="#函数作为参数传给函数" class="headerlink" title="函数作为参数传给函数"></a>函数作为参数传给函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Pro</span>(<span class="params">fn</span>)</span>&#123;<span class="comment">//1首先声明了一个pro函数,pro函数接收一个函数作为参数</span></span><br><span class="line">    <span class="keyword">var</span> value = <span class="number">100</span></span><br><span class="line">    fn(value)<span class="comment">//3然后再Pro里面执行了传递过来的函数，并且给此函数传递了一个参数，这样就可以在Pro执行的时候拿到里面的数据</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Pro(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;<span class="comment">//2然后我们执行pro函数，传递给它一个匿名函数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"fn执行了"</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"value是:"</span>+value)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>首先声明了一个pro函数,pro函数接收一个函数作为参数</li>
+<li>然后我们执行pro函数，传递给它一个匿名函数</li>
+<li>然后再Pro里面执行了传递过来的函数，并且给此函数传递了一个参数，这样就可以在Pro执行的时候拿到里面的数据</li>
+</ol>
+<h3 id="构造函数版本"><a href="#构造函数版本" class="headerlink" title="构造函数版本"></a>构造函数版本</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Pro</span>(<span class="params">fn</span>) </span>&#123;<span class="comment">//1首先声明了一个pro构造函数,pro构造函数接收一个函数作为参数</span></span><br><span class="line">    <span class="keyword">this</span>.init(fn)<span class="comment">//3.初始化</span></span><br><span class="line">&#125;</span><br><span class="line">Pro.prototype = &#123;</span><br><span class="line">    <span class="keyword">constructor</span>: Pro,</span><br><span class="line">    init(fn) &#123;</span><br><span class="line">        fn(<span class="number">5000</span>)<span class="comment">//4执行实例化传递过来的fn方法并且穿一个实参5000</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> Pro(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;<span class="comment">//2实例化Pro传递一个函数作为参数</span></span><br><span class="line">    <span class="comment">//假设我们现在需要在这里拿到res的值</span></span><br><span class="line">    <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="加入异步操作"><a href="#加入异步操作" class="headerlink" title="加入异步操作"></a>加入异步操作</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Pro</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.init(fn)</span><br><span class="line">&#125;</span><br><span class="line">Pro.prototype=&#123;</span><br><span class="line">    <span class="keyword">constructor</span>:Pro,</span><br><span class="line">    init(fn)&#123;</span><br><span class="line">        fn(<span class="keyword">this</span>.res)<span class="comment">//4.改变执行时的传惨，把res方法传递给实例化对象</span></span><br><span class="line">    &#125;,</span><br><span class="line">    res(value)&#123;<span class="comment">//3.定义一个res方法</span></span><br><span class="line">        <span class="built_in">console</span>.log(value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> Pro(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="comment">//1.改写为异步操作并且执行res,那么这次的res就不是数值，也是一个函数了</span></span><br><span class="line">        <span class="keyword">var</span> vlue = <span class="built_in">parseInt</span>(<span class="built_in">Math</span>.random()*<span class="number">500</span>)</span><br><span class="line">        res(vlue)<span class="comment">//2.我们现在执行这个函数，这样就可以在异步里面拿到这个参数</span></span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>现在我们需要在构造函数里拿到异步操作之后的值，假设setTimeout是一个网络请求，value是网网络请求之后的结果</li>
+<li>此时的res就是构造函数的res,我们在初始化的时候执行fn方法,然后把res方法作为参数传递给实例化对象的函数的参数了。</li>
+<li>然后执行res方法,把vlaue传递给构造函数，此时就可以在构造函数里面的res方法里拿到value的值了</li>
+</ol>
+<h3 id="用-then来实现链式调用"><a href="#用-then来实现链式调用" class="headerlink" title="用.then来实现链式调用"></a>用.then来实现链式调用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Pro</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.init(fn)</span><br><span class="line">&#125;</span><br><span class="line">Pro.prototype=&#123;</span><br><span class="line">    <span class="keyword">constructor</span>:Pro,</span><br><span class="line">    fns:[],</span><br><span class="line">    init(fn)&#123;</span><br><span class="line">        fn(<span class="keyword">this</span>.res.bind(<span class="keyword">this</span>))</span><br><span class="line">    &#125;,</span><br><span class="line">    res(value)&#123;</span><br><span class="line">        <span class="keyword">this</span>.fns.forEach(<span class="function"><span class="params">fns</span>=&gt;</span>fns(value))</span><br><span class="line">    &#125;,</span><br><span class="line">    then(res)&#123;</span><br><span class="line">        <span class="keyword">this</span>.fns.push(res)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> Pro(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> vlue = <span class="built_in">parseInt</span>(<span class="built_in">Math</span>.random()*<span class="number">500</span>)</span><br><span class="line">        res(vlue)</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>.then接收的也是一个函数，但是我们是异步执行的，所以每次.then的时候用一个数组把传递过去的方法存起来，然后在res执行的时候执行传递过去的.then方法并且把vlaue传过去。这样就实现了链式调用。</p>
+
           
             <div class='article_footer'>
               
@@ -433,7 +452,7 @@
           
         
           
-            <p>本文永久链接是：<a href=http://yoursite.com/2020/06/10/%E6%96%B0%E5%BB%BA%E6%96%87%E6%A1%A3/>http://yoursite.com/2020/06/10/%E6%96%B0%E5%BB%BA%E6%96%87%E6%A1%A3/</a></p>
+            <p>本文永久链接是：<a href=http://yoursite.com/2020/07/07/%E7%AE%80%E5%8D%95%E7%89%88Promise%E5%B0%81%E8%A3%85/>http://yoursite.com/2020/07/07/%E7%AE%80%E5%8D%95%E7%89%88Promise%E5%B0%81%E8%A3%85/</a></p>
           
         
       </blockquote>
@@ -484,10 +503,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-10T20:25:48+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-07T14:43:40+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jun 10, 2020</p>
+    <p>更新于：Jul 7, 2020</p>
   </a>
 </div>
 
@@ -511,7 +530,7 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/06/10/%E6%96%B0%E5%BB%BA%E6%96%87%E6%A1%A3/&title=新建文档 - 伊萨格&summary="
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/07/07/%E7%AE%80%E5%8D%95%E7%89%88Promise%E5%B0%81%E8%A3%85/&title=简单版Promise封装 - 伊萨格&summary="
           
           >
           
@@ -523,7 +542,7 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2020/06/10/%E6%96%B0%E5%BB%BA%E6%96%87%E6%A1%A3/&title=新建文档 - 伊萨格&summary="
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2020/07/07/%E7%AE%80%E5%8D%95%E7%89%88Promise%E5%B0%81%E8%A3%85/&title=简单版Promise封装 - 伊萨格&summary="
           
           >
           
@@ -535,7 +554,7 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/06/10/%E6%96%B0%E5%BB%BA%E6%96%87%E6%A1%A3/&title=新建文档 - 伊萨格&summary="
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/07/07/%E7%AE%80%E5%8D%95%E7%89%88Promise%E5%B0%81%E8%A3%85/&title=简单版Promise封装 - 伊萨格&summary="
           
           >
           
@@ -559,23 +578,22 @@
         
           <div class="prev-next">
             
-              <a class='prev' href='/2020/06/13/npm%E5%B8%B8%E7%94%A8%E6%96%B9%E5%BC%8F/'>
-                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>npm常用方式</p>
-                <p class='content'>npm使用方式1.npm常用命令
-npm init
-
-npm init -y  //可以跳过向导，快速生成 
-
-
-npm install
-
-npm install //一次性把 dependen...</p>
+              <a class='prev' href='/2020/07/07/async%E4%B8%8Eawait/'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>async与await</p>
+                <p class='content'></p>
               </a>
             
             
-              <a class='next' href='/2020/06/10/hello-world/'>
-                <p class='title'>Hello World<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-                <p class='content'>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any ...</p>
+              <a class='next' href='/2020/06/15/vue-axios%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/'>
+                <p class='title'>vue-axios跨域请求方法<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>vue-axios跨域
+基本环境
+
+*”axios”*: “^0.19.2”,
+
+*”body-parser”*: “^1.19.0”,
+
+*”cookie-parser”*: “^1.4.5”...</p>
               </a>
             
           </div>
@@ -620,7 +638,7 @@ npm install //一次性把 dependen...</p>
 
   <script>
     window.subData = {
-      title: '新建文档',
+      title: '简单版Promise封装',
       tools: true
     }
   </script>
@@ -635,6 +653,20 @@ npm install //一次性把 dependen...</p>
     
     
 
+
+  <section class="widget toc-wrapper shadow desktop mobile">
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数作为参数传给函数"><span class="toc-text">函数作为参数传给函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造函数版本"><span class="toc-text">构造函数版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加入异步操作"><span class="toc-text">加入异步操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用-then来实现链式调用"><span class="toc-text">用.then来实现链式调用</span></a></li></ol>
+    </div>
+  </section>
 
 
   
