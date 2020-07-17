@@ -367,6 +367,140 @@
         
           
   <h2 class="title">
+    <a href="/2020/07/17/Object.defineProperty/">
+      Object.defineProperty
+    </a>
+  </h2>
+
+
+        
+        <div class='new-meta-box'>
+          
+            
+          
+            
+              
+<div class='new-meta-item author'>
+  <a href="https://yisage.cn" target="_blank" rel="nofollow noopener">
+    <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3324278405,2511104257&fm=11&gp=0.jpg">
+    <p>伊萨格</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+
+            
+          
+            
+              <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：Jul 17, 2020</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+
+            
+          
+            
+              
+
+            
+          
+            
+          
+        </div>
+        
+          <hr>
+        
+      </div>
+    
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Object-defineProperty（）"><a href="#Object-defineProperty（）" class="headerlink" title="Object.defineProperty（）"></a>Object.defineProperty（）</h2><ul>
+<li><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
+<li>Object.defineProperty(obj, key, descriptor)</li>
+<li>参数1：目标对象</li>
+<li>参数2：要定义或修改的属性的键名</li>
+<li>参数3：要定义或修改的属性特性描述<ul>
+<li>属性1：<a href="#1"> Vlaue</a></li>
+<li>属性2：<a href="#2">writable</a></li>
+<li>属性3：<a href="3">enumerable</a></li>
+<li>属性4：<a href="4">configurable</a></li>
+</ul>
+</li>
+<li>返回值：传递过去的Object</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="1-Vlaue"><a href="#1-Vlaue" class="headerlink" title="1.Vlaue"></a><h3 id="1">1.Vlaue</h3></h4><p>该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。<br><strong>默认为 undefined</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name: <span class="string">"哈哈"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">"name"</span>, &#123;</span><br><span class="line">    value: <span class="string">'这是名字'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj2, <span class="string">"name"</span>, &#123;&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(obj2)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<p><img src="https://m.qpic.cn/psc?/V11XIO3b3QfOuG/cZ*1m6kq*VbJXsjfp7tuevPmqAbpfzOr0Ntxe*s7ljwAHVnslr28X7cFcn3388KAhbVuSQsQtsG49sMXN5HAOg!!/b&bo=XwHkAAAAAAADB5g!&rf=viewer_4" alt="image-20200702162518092"></p>
+</li>
+</ul>
+<h3 id="2-writable属性"><a href="#2-writable属性" class="headerlink" title="2.writable属性"></a><h3 id="2">2.writable属性</h3></h3><p>  该对象的该属性能否被重写</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">name</span>: <span class="string">'张三'</span>, <span class="attr">sex</span>: <span class="string">'男'</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">"sex"</span>, &#123;</span><br><span class="line">    writable: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line">obj.sex = <span class="string">"女"</span></span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 = &#123; <span class="attr">name</span>: <span class="string">'张三'</span>, <span class="attr">sex</span>: <span class="string">'男'</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj2, <span class="string">"sex"</span>, &#123;</span><br><span class="line">    writable: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line">obj2.sex = <span class="string">"女"</span></span><br><span class="line"><span class="built_in">console</span>.log(obj2)</span><br><span class="line"></span><br><span class="line"><span class="comment">//网上看到说默认为false,不清楚咋回事,如果不写该属性对象的值也可以改变</span></span><br><span class="line"><span class="keyword">var</span> obj3 = &#123; <span class="attr">name</span>: <span class="string">'张三'</span>, <span class="attr">sex</span>: <span class="string">'男'</span> &#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj3, <span class="string">"sex"</span>, &#123;&#125;)</span><br><span class="line">obj3.sex = <span class="string">"女"</span></span><br><span class="line"><span class="built_in">console</span>.log(obj3)</span><br></pre></td></tr></table></figure>
+
+<p>  输出结果：</p>
+<p>  <img src="https://m.qpic.cn/psc?/V11XIO3b3QfOuG/cZ*1m6kq*VbJXsjfp7tuetckA9WHJLobB52IoWsLoV9APhlcFEtH2uLiHbnKW9O96W.GP6vlAGSwetfRpG5F7A!!/b&bo=BwNxAQAAAAADB1Y!&rf=viewer_4" alt="image-20200702163851956"></p>
+<h4 id="3-enumerable"><a href="#3-enumerable" class="headerlink" title="3.enumerable"></a><h3 id="3">3.<strong>enumerable</strong></h3></h4><p>  此属性是否可以被枚举，设置为false之后不可以枚举，但可以访问，也可以更改</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    <span class="string">"1"</span>: <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"2"</span>: <span class="string">"2"</span>,</span><br><span class="line">    <span class="string">"3"</span>: <span class="string">"3"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">"2"</span>, &#123;</span><br><span class="line">    enumerable: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line">obj[<span class="string">"2"</span>] = <span class="number">20</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.keys(obj))<span class="comment">//["1","3"]</span></span><br><span class="line"><span class="built_in">console</span>.log(obj[<span class="string">"2"</span>])<span class="comment">//20</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="4-configurable"><a href="#4-configurable" class="headerlink" title="4.configurable"></a><h3 id="4">4.configurable</h3></h4><ul>
+<li><p>作用1：是否可以使用delete删除目标属性</p>
+</li>
+<li><p>作用2：目标属性是否可以再次设置特性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    <span class="string">"1"</span>:<span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"2"</span>:<span class="string">"2"</span>,</span><br><span class="line">    <span class="string">"3"</span>:<span class="string">"3"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj,<span class="string">"2"</span>,&#123;</span><br><span class="line">    configurable:<span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 测试是否可以被删除</span></span><br><span class="line"><span class="keyword">delete</span> obj[<span class="string">"2"</span>]</span><br><span class="line">obj[<span class="string">"2"</span>] = <span class="string">"可以修改？"</span></span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>&#123;<span class="comment">//捕获错误</span></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(obj,<span class="string">"2"</span>,&#123;</span><br><span class="line">        configurable:<span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">    <span class="built_in">console</span>.dir(err)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">delete</span> obj[<span class="string">"2"</span>]</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<p>由图可以得出，当configurable设置为false的时候，属性值不可以被删除，并且不可以再次修改特性，如果修改会报错，但是属性的值依旧可以改变。</p>
+<p><img src="http://m.qpic.cn/psc?/V11XIO3b3QfOuG/bmxpj0TIaxwnN1NLYawL3K2VKthRBIeRNZG0yXrbKOHlMJaQmLzoukAlAJHtAgP6q2wx.mXQXTV8FoVyes5Z3*465TS*bf8om*oqrCByPIs!/b&bo=3QIVAQAAAAADF*k!&rf=viewer_4" alt="image-20200702165623687"></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+      
+    
+  </section>
+</article>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box shadow reveal ">
+  
+
+
+  <section class='meta'>
+    
+      
+      
+      <div class="meta" id="header-meta">
+        
+          
+  <h2 class="title">
     <a href="/2020/07/16/element-ui%E6%A0%91%E8%A1%A8%E6%A0%BC%E6%87%92%E5%8A%A0%E8%BD%BD%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE/">
       element-ui树表格懒加载动态更新数据
     </a>
@@ -431,93 +565,6 @@
         <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"home"</span>&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"app-page-header"</span>&gt;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div class="app-page-content deepBox"&gt;</span></span><br><span class="line"><span class="regexp">      &lt;el-table</span></span><br><span class="line"><span class="regexp">        ref="table"</span></span><br><span class="line"><span class="regexp">        :data="tableData"</span></span><br><span class="line"><span class="regexp">        style="width: 100%;margin-bottom: 20px;"</span></span><br><span class="line"><span class="regexp">        row-key="areaId"</span></span><br><span class="line"><span class="regexp">        border</span></span><br><span class="line"><span class="regexp">        :load="load"</span></span><br><span class="line"><span class="regexp">        :lazy="true"</span></span><br><span class="line"><span class="regexp">        :tree-props="&#123;children: 'children', hasChildren:'hasChildren'&#125;"</span></span><br><span class="line"><span class="regexp">      &gt;</span></span><br><span class="line"><span class="regexp">        &lt;!-- :expand-row-keys="expandRowKeys" --&gt;</span></span><br><span class="line"><span class="regexp">        &lt;el-table-column width="60" align="center"&gt;</span></span><br><span class="line"><span class="regexp">          &lt;template slot-scope="scope"&gt;</span></span><br><span class="line"><span class="regexp">            &lt;span v-show="!scope.row.hasChildren"&gt;-&lt;/</span>span&gt;</span><br><span class="line">          &lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>el-table-column&gt;</span><br><span class="line">        &lt;el-table-column prop=<span class="string">"name"</span> label=<span class="string">"区域名称"</span> width=<span class="string">"100"</span>&gt;</span><br><span class="line">          &lt;template slot-scope=<span class="string">"scope"</span>&gt;</span><br><span class="line">            &lt;el-link</span><br><span class="line">              type=<span class="string">"primary"</span></span><br><span class="line">              @click=<span class="string">"$router.push(`serverList/$&#123;scope.row.areaId&#125;`)"</span></span><br><span class="line">            &gt;&#123;&#123;scope.row.name&#125;&#125;&lt;<span class="regexp">/el-link&gt;</span></span><br><span class="line"><span class="regexp">          &lt;/</span>template&gt;</span><br><span class="line">        &lt;<span class="regexp">/el-table-column&gt;</span></span><br><span class="line"><span class="regexp">        &lt;el-table-column prop="childCount" label="子区域数"&gt;&lt;/</span>el-table-column&gt;</span><br><span class="line">        &lt;el-table-column prop=<span class="string">"dnai"</span> label=<span class="string">"标识符"</span>&gt;&lt;<span class="regexp">/el-table-column&gt;</span></span><br><span class="line"><span class="regexp">        &lt;el-table-column prop="ruleCount" label="服务器数"&gt;&lt;/</span>el-table-column&gt;</span><br><span class="line">        &lt;el-table-column prop=<span class="string">"createdAt"</span> label=<span class="string">"加入时间"</span>&gt;&lt;<span class="regexp">/el-table-column&gt;</span></span><br><span class="line"><span class="regexp">        &lt;el-table-column prop="ruleCount" label="关联策略数"&gt;&lt;/</span>el-table-column&gt;</span><br><span class="line">        &lt;el-table-column prop=<span class="string">"ruleCount"</span> label=<span class="string">"操作"</span> width=<span class="string">"200"</span>&gt;</span><br><span class="line">          &lt;template slot-scope=<span class="string">"scope"</span>&gt;</span><br><span class="line">            &lt;el-button-group&gt;</span><br><span class="line">              &lt;el-button type=<span class="string">"primary"</span> icon=<span class="string">"el-icon-plus"</span> size=<span class="string">"mini"</span> @click=<span class="string">"addReg(scope.row)"</span>&gt;&lt;<span class="regexp">/el-button&gt;</span></span><br><span class="line"><span class="regexp">              &lt;el-button type="danger" icon="el-icon-close" size="mini" @click="del(scope.row)"&gt;&lt;/</span>el-button&gt;</span><br><span class="line">              &lt;el-button type=<span class="string">"primary"</span> icon=<span class="string">"el-icon-edit"</span> size=<span class="string">"mini"</span> @click=<span class="string">"edit(scope.row)"</span>&gt;&lt;<span class="regexp">/el-button&gt;</span></span><br><span class="line"><span class="regexp">              &lt;el-button type="primary" icon="el-icon-tickets" size="mini"&gt;&lt;/</span>el-button&gt;</span><br><span class="line">            &lt;<span class="regexp">/el-button-group&gt;</span></span><br><span class="line"><span class="regexp">          &lt;/</span>template&gt;</span><br><span class="line">        &lt;<span class="regexp">/el-table-column&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>el-table&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;addRegional</span></span><br><span class="line"><span class="regexp">      :dialogVisible.sync="regionalAddVisible"</span></span><br><span class="line"><span class="regexp">      :parentList="tableData"</span></span><br><span class="line"><span class="regexp">      :regIdVal="regIdVal"</span></span><br><span class="line"><span class="regexp">      @sonAddEvent="sonAddEvent"</span></span><br><span class="line"><span class="regexp">      :edit="isEdit"</span></span><br><span class="line"><span class="regexp">      ref="addReg"</span></span><br><span class="line"><span class="regexp">    &gt;&lt;/</span>addRegional&gt;</span><br><span class="line">    &lt;addServer :dialogVisible.sync=<span class="string">"serverAddVisible"</span>&gt;&lt;<span class="regexp">/addServer&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script lang="ts"&gt;</span></span><br><span class="line"><span class="regexp">import &#123; Component, Vue &#125; from "vue-property-decorator";</span></span><br><span class="line"><span class="regexp">import PageHead from "@/</span>components/PageHead/index.vue<span class="string">";</span></span><br><span class="line"><span class="string">import addRegional from "</span>./components/addRegional.vue<span class="string">";</span></span><br><span class="line"><span class="string">import addServer from "</span>./components/addServer.vue<span class="string">";</span></span><br><span class="line"><span class="string">import &#123; resource_areas_add &#125; from "</span>@/api/regionalManagement<span class="string">";</span></span><br><span class="line"><span class="string">import &#123;</span></span><br><span class="line"><span class="string">  resource_areas_list,</span></span><br><span class="line"><span class="string">  resource_areas_del</span></span><br><span class="line"><span class="string">&#125; from "</span>@/api/regionalManagement<span class="string">";</span></span><br><span class="line"><span class="string">@Component(&#123;</span></span><br><span class="line"><span class="string">  name: "</span>RegionalManagement<span class="string">",</span></span><br><span class="line"><span class="string">  components: &#123;</span></span><br><span class="line"><span class="string">    PageHead,</span></span><br><span class="line"><span class="string">    addRegional,</span></span><br><span class="line"><span class="string">    addServer</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&#125;)</span></span><br><span class="line"><span class="string">export default class RegionalManagement extends Vue &#123;</span></span><br><span class="line"><span class="string">  $refs!: &#123;</span></span><br><span class="line"><span class="string">    table: HTMLFormElement;</span></span><br><span class="line"><span class="string">    addReg: HTMLFormElement;</span></span><br><span class="line"><span class="string">  &#125;;</span></span><br><span class="line"><span class="string">  currentPage1 = 1;</span></span><br><span class="line"><span class="string">  regionalAddVisible = false;</span></span><br><span class="line"><span class="string">  serverAddVisible = false;</span></span><br><span class="line"><span class="string">  expandRowKeys: number[] = [];</span></span><br><span class="line"><span class="string">  tableData: any = [];</span></span><br><span class="line"><span class="string">  total: number = 0;</span></span><br><span class="line"><span class="string">  maps = new Map(); //缓存数据</span></span><br><span class="line"><span class="string">  RowObject:any = &#123;&#125;; //标记操作行对象</span></span><br><span class="line"><span class="string">  isEdit:boolean=false;</span></span><br><span class="line"><span class="string">  regIdVal = &#123;</span></span><br><span class="line"><span class="string">    id: "</span><span class="string">",</span></span><br><span class="line"><span class="string">    val: "</span><span class="string">"</span></span><br><span class="line"><span class="string">  &#125;;</span></span><br><span class="line"><span class="string">  created() &#123;</span></span><br><span class="line"><span class="string">    this.getList();</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  //请求列表</span></span><br><span class="line"><span class="string">  async getList(pid: number = 0) &#123;</span></span><br><span class="line"><span class="string">    let res = await resource_areas_list(&#123; parentId: pid &#125;);</span></span><br><span class="line"><span class="string">    this.tableData = this.addHasChildren(res.areas);</span></span><br><span class="line"><span class="string">    this.maps.set(0,this.tableData)</span></span><br><span class="line"><span class="string">    console.log(this.maps)</span></span><br><span class="line"><span class="string">    console.log(this.tableData);</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  //添加树区域符号判断</span></span><br><span class="line"><span class="string">  addHasChildren(arr: any) &#123;</span></span><br><span class="line"><span class="string">    return arr.map((item: any) =&gt;</span></span><br><span class="line"><span class="string">      Object.assign(item, &#123; hasChildren: item.childCount &gt; 0 &#125;)</span></span><br><span class="line"><span class="string">    );</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  //懒加载数据点击加号触发</span></span><br><span class="line"><span class="string">  async load(tree: any, treeNode: Object, resolve: Function) &#123;</span></span><br><span class="line"><span class="string">    let areaId = tree.areaId;</span></span><br><span class="line"><span class="string">    //保存数据，参数1是当前展开的id作为标识符便于查找，参数2是对应的对象</span></span><br><span class="line"><span class="string">    this.maps.set(areaId, tree);</span></span><br><span class="line"><span class="string">    console.log(this.maps);</span></span><br><span class="line"><span class="string">    let res = await resource_areas_list(&#123; parentId: tree.areaId &#125;);</span></span><br><span class="line"><span class="string">    let arr = this.addHasChildren(res.areas);</span></span><br><span class="line"><span class="string">    resolve(res.areas);</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  //删除</span></span><br><span class="line"><span class="string">  async del(object: any) &#123;</span></span><br><span class="line"><span class="string">    let p = await this.$confirm("</span>确认删除该区域吗?<span class="string">", "</span>提示<span class="string">", &#123;</span></span><br><span class="line"><span class="string">      confirmButtonText: "</span>确定<span class="string">",</span></span><br><span class="line"><span class="string">      cancelButtonText: "</span>取消<span class="string">",</span></span><br><span class="line"><span class="string">      type: "</span>warning<span class="string">"</span></span><br><span class="line"><span class="string">    &#125;);</span></span><br><span class="line"><span class="string">    if (p == "</span>confirm<span class="string">") &#123;</span></span><br><span class="line"><span class="string">      let res = await resource_areas_del(&#123; areaId: object.areaId &#125;);</span></span><br><span class="line"><span class="string">      this.$message(&#123; type: "</span>success<span class="string">", message: "</span>删除成功!<span class="string">" &#125;);</span></span><br><span class="line"><span class="string">      //删除的时候找父节点更新本身列表，然后找到父节点的父节点更新自己本身</span></span><br><span class="line"><span class="string">      //需要更新父所以从缓存的地方找到父的父节点去更新父</span></span><br><span class="line"><span class="string">      let parentId = this.maps.get(object.parentId).parentId</span></span><br><span class="line"><span class="string">      //更新父节点从而触发本身所在数组发生变化</span></span><br><span class="line"><span class="string">      let areaId = this.maps.get(object.parentId).areaId</span></span><br><span class="line"><span class="string">      this.upData(areaId,parentId)</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  //获取子组件返回数据，然后进行添加</span></span><br><span class="line"><span class="string">  async sonAddEvent(from_date: any) &#123;</span></span><br><span class="line"><span class="string">    //提交请求</span></span><br><span class="line"><span class="string">    let res = await resource_areas_add(from_date);</span></span><br><span class="line"><span class="string">    //关闭组件</span></span><br><span class="line"><span class="string">    this.regionalAddVisible = false;</span></span><br><span class="line"><span class="string">    this.$message(&#123; type: "</span>success<span class="string">", message: "</span>添加成功!<span class="string">" &#125;);</span></span><br><span class="line"><span class="string">    let areaId = this.RowObject.areaId//获取添加行的id</span></span><br><span class="line"><span class="string">    let  parentId = this.RowObject.parentId?this.RowObject.parentId:0//获取操作行的父id</span></span><br><span class="line"><span class="string">    this.upData(areaId,parentId);//通过子父节点更新数据</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  async upData(id: number, pid?: number) &#123;</span></span><br><span class="line"><span class="string">    //更新父</span></span><br><span class="line"><span class="string">    if (pid) &#123;</span></span><br><span class="line"><span class="string">      console.log("</span>有父节点<span class="string">")</span></span><br><span class="line"><span class="string">      let res = await resource_areas_list(&#123; parentId: pid &#125;);</span></span><br><span class="line"><span class="string">      let list = this.addHasChildren(res.areas)</span></span><br><span class="line"><span class="string">      this.$set(this.$refs.table.store.states.lazyTreeNodeMap, pid, list);</span></span><br><span class="line"><span class="string">    &#125;else&#123;</span></span><br><span class="line"><span class="string">      console.log("</span>没有父节点所以重新请求列表<span class="string">")</span></span><br><span class="line"><span class="string">      this.getList();</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    //更新子</span></span><br><span class="line"><span class="string">    if (this.maps.has(id)) &#123;</span></span><br><span class="line"><span class="string">      console.log("</span>更新子节点数组,id是<span class="string">"+id)</span></span><br><span class="line"><span class="string">      let res = await resource_areas_list(&#123; parentId: id &#125;); //再次请求获取当前数据</span></span><br><span class="line"><span class="string">      let list = this.addHasChildren(res.areas)//处理数据</span></span><br><span class="line"><span class="string">      this.$set(this.$refs.table.store.states.lazyTreeNodeMap, id, list);//将当前数据重新push</span></span><br><span class="line"><span class="string">    &#125;else&#123;//如果最外层更新顶级</span></span><br><span class="line"><span class="string">    console.log("</span>最外层，所以更新父节点<span class="string">")</span></span><br><span class="line"><span class="string">       this.getList();</span></span><br><span class="line"><span class="string">    &#125; </span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  edit(object: any) &#123;</span></span><br><span class="line"><span class="string">    this.regionalAddVisible = true;</span></span><br><span class="line"><span class="string">    this.isEdit = true</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">  addReg(object: any) &#123;</span></span><br><span class="line"><span class="string">    //给子组件传值</span></span><br><span class="line"><span class="string">    this.regionalAddVisible = true;</span></span><br><span class="line"><span class="string">    if (!object) &#123;</span></span><br><span class="line"><span class="string">      this.RowObject = &#123;&#125;;</span></span><br><span class="line"><span class="string">      this.regIdVal.id = "</span><span class="string">";</span></span><br><span class="line"><span class="string">      this.regIdVal.val = "</span><span class="string">";</span></span><br><span class="line"><span class="string">      return;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    this.RowObject = object; //获取行id存储</span></span><br><span class="line"><span class="string">    this.regIdVal.id = object.areaId;</span></span><br><span class="line"><span class="string">    this.regIdVal.val = object.name;</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;style lang="</span>scss<span class="string">" scoped&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;/style&gt;</span></span><br></pre></td></tr></table></figure>
 
 
-      
-    </div>
-    
-      
-    
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box shadow reveal ">
-  
-
-
-  <section class='meta'>
-    
-      
-      
-      <div class="meta" id="header-meta">
-        
-          
-  <h2 class="title">
-    <a href="/2020/07/07/async%E4%B8%8Eawait/">
-      async与await
-    </a>
-  </h2>
-
-
-        
-        <div class='new-meta-box'>
-          
-            
-          
-            
-              
-<div class='new-meta-item author'>
-  <a href="https://yisage.cn" target="_blank" rel="nofollow noopener">
-    <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3324278405,2511104257&fm=11&gp=0.jpg">
-    <p>伊萨格</p>
-  </a>
-</div>
-
-            
-          
-            
-              
-
-            
-          
-            
-              <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Jul 7, 2020</p>
-  </a>
-</div>
-
-            
-          
-            
-              
-
-            
-          
-            
-              
-
-            
-          
-            
-          
-        </div>
-        
-          <hr>
-        
-      </div>
-    
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      
-        
       
     </div>
     
