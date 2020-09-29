@@ -5,6 +5,8 @@
   <!-- SEO相关 -->
   
     
+      <meta name="robots" content="noindex,follow">
+    
   
   <!-- 渲染优化 -->
   <meta name="renderer" content="webkit">
@@ -16,7 +18,7 @@
 
   <!-- 页面元数据 -->
   
-    <title>vue-axios跨域请求方法 - 伊萨格</title>
+    <title>归档：2020/8 - 伊萨格</title>
   
   
 
@@ -335,11 +337,22 @@
       
 
 <div class='l_main'>
-  
-
-  
-    <article id="post" class="post white-box reveal shadow article-type-post" itemscope itemprop="blogPost">
+	
+		
+  <section class="post-list ">
+    
       
+        
+          
+        
+      
+    
+    
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box shadow reveal ">
+  
 
 
   <section class='meta'>
@@ -349,11 +362,11 @@
       <div class="meta" id="header-meta">
         
           
-  <h1 class="title">
-    <a href="/2020/06/15/vue-axios%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/">
-      vue-axios跨域请求方法
+  <h2 class="title">
+    <a href="/2020/08/04/Nuxt%E4%BD%BF%E7%94%A8/">
+      Nuxt使用
     </a>
-  </h1>
+  </h2>
 
 
         
@@ -381,7 +394,7 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2020年6月15日</p>
+    <p>发布于：2020年8月4日</p>
   </a>
 </div>
 
@@ -390,6 +403,13 @@
             
               
 
+            
+          
+            
+              
+
+            
+          
             
           
         </div>
@@ -401,308 +421,169 @@
   </section>
 
 
-      <section class="article typo">
-        <div class="article-entry" itemprop="articleBody">
-          
-          <h1 id="vue-axios跨域"><a href="#vue-axios跨域" class="headerlink" title="vue-axios跨域"></a>vue-axios跨域</h1><ul>
-<li><p>基本环境</p>
-<ul>
-<li><p>*”axios”*: “^0.19.2”,</p>
-</li>
-<li><p>*”body-parser”*: “^1.19.0”,</p>
-</li>
-<li><p>*”cookie-parser”*: “^1.4.5”,</p>
-</li>
-<li><p>*”echarts”*: “^4.8.0”,</p>
-</li>
-<li><p>*”element-ui”*: “^2.13.2”,</p>
-</li>
-<li><p>*”express”*: “^4.17.1”,</p>
-</li>
-<li><p>*”multer”*: “^1.4.2”,</p>
-</li>
-<li><p>*”vue”*: “^2.5.2”,</p>
-</li>
-<li><p>*”vue-axios”*: “^2.1.5”,</p>
-</li>
-<li><p>*”vue-router”*: “^3.0.1”  </p>
-</li>
-</ul>
-</li>
-<li><p>示例接口：</p>
-<ul>
-<li>本地端口：<code>http://localhost:8083/</code></li>
-<li>跨域端口：<code>https://iflow-api.uc.cn/feiyan/special</code>（此接口是新冠病毒数据接口地址）</li>
-</ul>
-</li>
-<li><p>解决方案</p>
-<ol>
-<li><p>第一步来到 <code>main.js</code> 中，加入以下配置项：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"><span class="keyword">import</span> ElementUI <span class="keyword">from</span> <span class="string">'element-ui'</span>;</span><br><span class="line"><span class="keyword">import</span> ajax <span class="keyword">from</span> <span class="string">'@/request/ajax'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'element-ui/lib/theme-chalk/index.css'</span>;</span><br><span class="line"><span class="keyword">import</span> echarts <span class="keyword">from</span> <span class="string">'echarts'</span>;</span><br><span class="line">Vue.prototype.$ajax = ajax</span><br><span class="line"></span><br><span class="line"><span class="comment">//跨域配置,此地的ajax只是一个命名,实际上是自己做过修改的axios</span></span><br><span class="line">ajax.defaults.baseURL = <span class="string">'/api'</span></span><br><span class="line">ajax.defaults.headers.post[<span class="string">'Content-Type'</span>] = <span class="string">'application/json'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = <span class="literal">false</span></span><br><span class="line">Vue.prototype.$echarts = echarts;</span><br><span class="line">Vue.use(ElementUI, &#123;</span><br><span class="line">  size: <span class="string">'medium'</span>,</span><br><span class="line">  zIndex: <span class="number">2000</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">/* eslint-disable no-new */</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  router,</span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ul>
-<ol start="2">
-<li><p>配置 <code>config</code> 文件下的 <code>index.js</code> ，找到 <code>proxyTable</code> 在此对象中加入以下代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'/api'</span>: &#123;</span><br><span class="line">       target:<span class="string">'https://iflow-api.uc.cn/feiyan'</span>, <span class="comment">// 你请求的第三方接口</span></span><br><span class="line">       changeOrigin:<span class="literal">true</span>, <span class="comment">// 在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样服务端和服务端进行数据的交互就不会有跨域问题</span></span><br><span class="line">       pathRewrite:&#123;  <span class="comment">// 路径重写，</span></span><br><span class="line">         <span class="string">'^/api'</span>: <span class="string">''</span>  <span class="comment">// 替换target中的请求地址，也就是说以后你在请求`https://iflow-api.uc.cn/feiyan/XXXXX这个地址的时候直接写成/xxxx即可。</span></span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>请求示例：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//本来请求地址是https://iflow-api.uc.cn/feiyan/special,现在只用写/special</span></span><br><span class="line"><span class="keyword">this</span>.$ajax.get(<span class="string">'/special'</span>,&#123;</span><br><span class="line">        <span class="string">'uc_param_str'</span>: <span class="string">'pccplomi'</span>,</span><br><span class="line">        <span class="string">'feiyan'</span>: <span class="string">'1'</span>,</span><br><span class="line">        <span class="string">'district'</span>: <span class="string">'1'</span>,</span><br><span class="line">        <span class="string">'tabStart'</span>: <span class="string">'0'</span>,</span><br><span class="line">        <span class="string">'tabEnd'</span>: <span class="string">'1'</span>,</span><br><span class="line">        <span class="string">'tabBrief'</span>:<span class="string">'1'</span>,</span><br><span class="line">        <span class="string">'aid'</span>: <span class="string">'3804775841868884355'</span></span><br><span class="line">      &#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;<span class="comment">//处理数据</span></span><br><span class="line">        <span class="keyword">this</span>.list = res.data.data.feiyan.provinces.map(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="built_in">Object</span>.assign(item,&#123;<span class="attr">sum</span>:item.sure_cnt-item.die_cnt-item.cure_cnt&#125;)</span><br><span class="line">        &#125;).sort(<span class="function">(<span class="params">item,item2</span>)=&gt;</span>&#123;</span><br><span class="line">          <span class="keyword">return</span> item2.sure_cnt-item.sure_cnt</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ol>
-<p>   然后执行请求可以看到本来是<code>https://iflow-api.uc.cn/feiyan/special</code>的现在变成了<code>http://localhost:8083/api/special</code> 也就是说经过这个配置 api替换了config文件下</p>
-<p>   index.js中target值的地址去开启一个代理，然后访问此路径下的所有接口都只用从<code>https://iflow-api.uc.cn/feiyan/special</code>之后开使写就行了。</p>
-
-          
-            <div class='article_footer'>
-              
-                
-  
-    
-    
-
-
-
-  
-
-  
-    
-    
-
-
-
-  
-
-  
-    
-    
-
-<section class="widget copyright  desktop mobile">
-  <div class='content'>
-    
-      <blockquote>
-        
-          
-            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
-
-          
-        
-          
-            <p>本文永久链接是：<a href=http://yoursite.com/2020/06/15/vue-axios%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/>http://yoursite.com/2020/06/15/vue-axios%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/</a></p>
-          
-        
-      </blockquote>
-    
-  </div>
-</section>
-
-  
-
-  
-    
-    
-
-<section class="widget qrcode  desktop mobile">
-  
-
-  <div class='content article-entry'>
-    
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
       
-        <div class='fancybox'><img src='https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/qrcode/wiki_volantis.png'
-        
-          height='64px'
-        ></div>
-      
-    
-      
-        <div class='fancybox'><img src='https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/qrcode/wiki_volantis.png'
-        
-          height='64px'
-        ></div>
-      
-    
-  </div>
-</section>
+        <h3 id="1-安装nuxt"><a href="#1-安装nuxt" class="headerlink" title="1.安装nuxt"></a>1.安装nuxt</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vue init nuxt/starter ssr-blog</span><br><span class="line">npm install</span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
 
-  
-
-
-              
-            </div>
-          
-        </div>
-        
-          
-
-
-  <section class='meta' id="footer-meta">
-    <div class='new-meta-box'>
-      
-        
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-06-15T23:05:23+08:00">
-  <a class='notlink'>
-    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2020年6月15日</p>
-  </a>
-</div>
-
-        
-      
-        
-          
-
-        
-      
-        
-          
-
-        
-      
-        
-          
-  <div class="new-meta-item share -mob-share-list">
-  <div class="-mob-share-list share-body">
-    
-      
-        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
-          
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2020/06/15/vue-axios%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/&title=vue-axios跨域请求方法 - 伊萨格&summary="
-          
-          >
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
-          
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/2020/06/15/vue-axios%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/&title=vue-axios跨域请求方法 - 伊萨格&summary="
-          
-          >
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
-          
-          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2020/06/15/vue-axios%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/&title=vue-axios跨域请求方法 - 伊萨格&summary="
-          
-          >
-          
-        </a>
-      
-    
-  </div>
-</div>
+<h3 id="2-引入全局CSS"><a href="#2-引入全局CSS" class="headerlink" title="2.引入全局CSS"></a>2.引入全局CSS</h3><p>把CSS文件放入到static中</p>
+<p>来到 <code>nuxt.config.js</code></p>
+<p>加入以下配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Headers of the page</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  head: &#123;</span><br><span class="line">    title: <span class="string">'ssr-blog'</span>,</span><br><span class="line">    meta: [</span><br><span class="line">      &#123; <span class="attr">charset</span>: <span class="string">'utf-8'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">name</span>: <span class="string">'viewport'</span>, <span class="attr">content</span>: <span class="string">'width=device-width, initial-scale=1'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">hid</span>: <span class="string">'description'</span>, <span class="attr">name</span>: <span class="string">'description'</span>, <span class="attr">content</span>: <span class="string">'Nuxt.js project'</span> &#125;</span><br><span class="line">    ],</span><br><span class="line">    link: [<span class="comment">//这里就是引入CSS的地方</span></span><br><span class="line">      &#123; <span class="attr">rel</span>: <span class="string">'stylesheet'</span>, <span class="attr">type</span>: <span class="string">'text/css'</span>, <span class="attr">href</span>: <span class="string">'/css/common.css'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">rel</span>: <span class="string">'stylesheet'</span>, <span class="attr">type</span>: <span class="string">'text/css'</span>, <span class="attr">href</span>: <span class="string">'/css/bootstrap.min.css'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">rel</span>: <span class="string">'stylesheet'</span>, <span class="attr">type</span>: <span class="string">'text/css'</span>, <span class="attr">href</span>: <span class="string">'/css/index.css'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Customize the progress bar color</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  loading: &#123; <span class="attr">color</span>: <span class="string">'#3B8070'</span> &#125;,</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  ** Build configuration</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  build: &#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    ** Run ESLint on save</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    extend (config, &#123; isDev, isClient &#125;) &#123;</span><br><span class="line">      <span class="keyword">if</span> (isDev &amp;&amp; isClient) &#123;</span><br><span class="line">        config.module.rules.push(&#123;</span><br><span class="line">          enforce: <span class="string">'pre'</span>,</span><br><span class="line">          test: <span class="regexp">/\.(js|vue)$/</span>,</span><br><span class="line">          loader: <span class="string">'eslint-loader'</span>,</span><br><span class="line">          exclude: <span class="regexp">/(node_modules)/</span></span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-        
+
+
+<h3 id="3-配置每个页面需要用到的头部跟尾部"><a href="#3-配置每个页面需要用到的头部跟尾部" class="headerlink" title="3.配置每个页面需要用到的头部跟尾部"></a>3.配置每个页面需要用到的头部跟尾部</h3><p>首先来到<code>components</code> 文件下新建两个组件 <code>topTitle</code> <code>Footer</code></p>
+<p>然后来到 <code>layouts</code> 文件下的 <code>default.vue</code> 配置页面组件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">topTitle</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">nuxt</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Footer</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> topTitle <span class="keyword">from</span> <span class="string">"~/components/topTitle.vue"</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Footer <span class="keyword">from</span> <span class="string">"~/components/Footer.vue"</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line">  components: &#123; topTitle, Footer &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
       
     </div>
+    
+      
+    
   </section>
+</article>
 
-
-        
-        
-          <div class="prev-next">
-            
-              <a class='prev' href='/2020/07/07/%E7%AE%80%E5%8D%95%E7%89%88Promise%E5%B0%81%E8%A3%85/'>
-                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>简单版Promise封装</p>
-                <p class='content'>函数作为参数传给函数123456789function Pro(fn)&#123;//1首先声明了一个pro函数,pro函数接收一个函数作为参数    var value = 100    fn...</p>
-              </a>
-            
-            
-              <a class='next' href='/2020/06/13/npm%E5%B8%B8%E7%94%A8%E6%96%B9%E5%BC%8F/'>
-                <p class='title'>npm常用方式<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-                <p class='content'>npm使用方式1.npm常用命令
-npm init
-
-npm init -y  //可以跳过向导，快速生成 
-
-
-npm install
-
-npm install //一次性把 dependen...</p>
-              </a>
-            
           </div>
         
-      </section>
-    </article>
+      
+    
+  </section>
   
-
-  
-    <!-- 显示推荐文章和评论 -->
-
-
-
-  <article class="post white-box reveal comments shadow">
-    <section class="article typo">
-      <p ct><i class='fas fa-comments'></i> 评论</p>
-      
-      
-      
-      
-      
-      
-        <section id="comments">
-          <div id="valine_container" class="valine_thread">
-            <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
-          </div>
-        </section>
-      
-      
-    </section>
-  </article>
-
+    
+    <!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
+    
+    
 
   
 
 
-
-
-<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
-
-
-
-  <script>
-    window.subData = {
-      title: 'vue-axios跨域请求方法',
-      tools: true
-    }
-  </script>
-
-
+	
 </div>
 <aside class='l_side'>
   
   
+    
+    
+
+<section class="widget blogger shadow desktop mobile">
+  <div class='content'>
+    
+      
+        <a class='avatar flat-box' href='/about/'>
+          <img no-lazy src='https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3324278405,2511104257&fm=11&gp=0.jpg'/>
+        </a>
+      
+    
+    
+      <div class='text'>
+        
+        
+        
+          <p><span id="jinrishici-sentence">伊萨格</span></p>
+        
+		  <script>
+		    var binft = function (r) {
+		      function t() {
+		        return b[Math.floor(Math.random() * b.length)]
+		      }  
+		      function e() {
+		        return String.fromCharCode(94 * Math.random() + 33)
+		      }
+		      function n(r) {
+		        for (var n = document.createDocumentFragment(), i = 0; r > i; i++) {
+		          var l = document.createElement("span");
+		          l.textContent = e(), l.style.color = t(), n.appendChild(l)
+		        }
+		        return n
+		      }
+		      function i() {
+		        var t = o[c.skillI];
+		        c.step ? c.step-- : (c.step = g, c.prefixP < l.length ? (c.prefixP >= 0 && (c.text += l[c.prefixP]), c.prefixP++) : "forward" === c.direction ? c.skillP < t.length ? (c.text += t[c.skillP], c.skillP++) : c.delay ? c.delay-- : (c.direction = "backward", c.delay = a) : c.skillP > 0 ? (c.text = c.text.slice(0, -1), c.skillP--) : (c.skillI = (c.skillI + 1) % o.length, c.direction = "forward")), r.textContent = c.text, r.appendChild(n(c.prefixP < l.length ? Math.min(s, s + c.prefixP) : Math.min(s, t.length - c.skillP))), setTimeout(i, d)
+		      }
+		      var l = "",
+		      o = ["饮黑色江水者","以至高权能粉碎一切","万物生自守恒","源力破则失正","莫以敌消彼长","然乾坤逆则天崩"].map(function (r) {
+		      return r + ""
+		      }),
+		      a = 2,
+		      g = 1,
+		      s = 5,
+		      d = 75,
+		      b = ["rgb(110,64,170)", "rgb(150,61,179)", "rgb(191,60,175)", "rgb(228,65,157)", "rgb(254,75,131)", "rgb(255,94,99)", "rgb(255,120,71)", "rgb(251,150,51)", "rgb(226,183,47)", "rgb(198,214,60)", "rgb(175,240,91)", "rgb(127,246,88)", "rgb(82,246,103)", "rgb(48,239,130)", "rgb(29,223,163)", "rgb(26,199,194)", "rgb(35,171,216)", "rgb(54,140,225)", "rgb(76,110,219)", "rgb(96,84,200)"],
+		      c = {
+		        text: "",
+		        prefixP: -s,
+		        skillI: 0,
+		        skillP: 0,
+		        direction: "forward",
+		        delay: a,
+		        step: g
+		      };
+		      i()
+		      };
+		      binft(document.getElementById('jinrishici-sentence'));
+		  </script>
+      </div>
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="mailto:me@xaoxuu.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/xaoxuu"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=63035382"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+  
 
   
     
     
 
+  
 
-  <section class="widget toc-wrapper shadow desktop mobile">
+  
     
-  <header>
     
-      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
-    
-  </header>
 
-
-    <div class='content'>
-      
-    </div>
-  </section>
-
+  
 
   
 
@@ -803,6 +684,14 @@ npm install //一次性把 dependen...</p>
 <script>setLoadingBarProgress(80);</script>
 
 
+
+
+	<!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
+	
+
+	
+
+
       <script>setLoadingBarProgress(60);</script>
     </div>
     <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
@@ -874,60 +763,6 @@ npm install //一次性把 dependen...</p>
 
 
 
-
-  
-    
-<script src="https://cdn.jsdelivr.net/npm/valine@1.4/dist/Valine.min.js"></script>
-
-  
-  <script>
-  var GUEST_INFO = ['nick','mail','link'];
-  var meta = 'nick,mail,link'.split(',').filter(function(item){
-    return GUEST_INFO.indexOf(item) > -1
-  });
-  var REQUIRED_FIELDS = ['nick','mail','link'];
-  var requiredFields = 'nick,mail'.split(',').filter(function(item){
-    return REQUIRED_FIELDS.indexOf(item) > -1
-  });
-  var valine = new Valine();
-  function emoji(path, idx, ext) {
-      return path + "/" + path + "-" + idx + "." + ext;
-  }
-  var emojiMaps = {};
-  for (var i = 1; i <= 54; i++) {
-    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
-  }
-  for (var i = 1; i <= 101; i++) {
-    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
-  }
-  for (var i = 1; i <= 116; i++) {
-    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
-  }
-  for (var i = 1; i <= 125; i++) {
-    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
-  }
-  for (var i = 1; i <= 4; i++) {
-    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
-  }
-  valine.init({
-    el: '#valine_container',
-    meta: meta,
-    
-    appId: "dogUA2FSKGTo029M1SEwGROT-MdYXbMMI",
-    appKey: "u0NdtQ8nvHoMdJPSYqm1LRxE",
-    placeholder: "快来评论吧~",
-    pageSize:'10',
-    avatar:'robohash',
-    lang:'zh-cn',
-    visitor: 'true',
-    highlight: 'true',
-    mathJax: 'false',
-    enableQQ: 'true',
-    requiredFields: requiredFields,
-    emojiCDN: 'https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/emoji/valine/',
-    emojiMaps: emojiMaps
-  })
-  </script>
 
 
 

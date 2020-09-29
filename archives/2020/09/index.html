@@ -18,7 +18,7 @@
 
   <!-- 页面元数据 -->
   
-    <title>归档：2020/6 - 伊萨格</title>
+    <title>归档：2020/9 - 伊萨格</title>
   
   
 
@@ -347,6 +347,8 @@
         
           
         
+          
+        
       
     
     
@@ -365,8 +367,8 @@
         
           
   <h2 class="title">
-    <a href="/2020/06/15/vue-axios%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95/">
-      vue-axios跨域请求方法
+    <a href="/2020/09/29/nodeJS%E7%88%AC%E8%99%AB%E5%88%9D%E6%8E%A2/">
+      nodeJS爬虫初探
     </a>
   </h2>
 
@@ -396,7 +398,7 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2020年6月15日</p>
+    <p>发布于：2020年9月29日</p>
   </a>
 </div>
 
@@ -426,58 +428,71 @@
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="vue-axios跨域"><a href="#vue-axios跨域" class="headerlink" title="vue-axios跨域"></a>vue-axios跨域</h1><ul>
-<li><p>基本环境</p>
-<ul>
-<li><p>*”axios”*: “^0.19.2”,</p>
-</li>
-<li><p>*”body-parser”*: “^1.19.0”,</p>
-</li>
-<li><p>*”cookie-parser”*: “^1.4.5”,</p>
-</li>
-<li><p>*”echarts”*: “^4.8.0”,</p>
-</li>
-<li><p>*”element-ui”*: “^2.13.2”,</p>
-</li>
-<li><p>*”express”*: “^4.17.1”,</p>
-</li>
-<li><p>*”multer”*: “^1.4.2”,</p>
-</li>
-<li><p>*”vue”*: “^2.5.2”,</p>
-</li>
-<li><p>*”vue-axios”*: “^2.1.5”,</p>
-</li>
-<li><p>*”vue-router”*: “^3.0.1”  </p>
-</li>
-</ul>
-</li>
-<li><p>示例接口：</p>
-<ul>
-<li>本地端口：<code>http://localhost:8083/</code></li>
-<li>跨域端口：<code>https://iflow-api.uc.cn/feiyan/special</code>（此接口是新冠病毒数据接口地址）</li>
-</ul>
-</li>
-<li><p>解决方案</p>
+        <h3 id="模块依赖"><a href="#模块依赖" class="headerlink" title="模块依赖"></a>模块依赖</h3><p>话不多说直接上安装代码</p>
+<pre><code>+ npm install cheerio --save
++ npm install html-entities --save
++ npm install iconv-lite --save
++ npm install request --save</code></pre><h3 id="初步爬取"><a href="#初步爬取" class="headerlink" title="初步爬取"></a>初步爬取</h3><p>爬取目标网站：<a href="http://www.biquge.info" target="_blank" rel="noopener">http://www.biquge.info</a> 笔趣阁小说网，随便找的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>)</span><br><span class="line"><span class="keyword">var</span> url = <span class="string">"http://www.biquge.info/"</span></span><br><span class="line"><span class="keyword">let</span> a = request(url, (error, response, body) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(body)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>爬取结果：<a href="https://imgchr.com/i/0eADK0" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/09/29/0eADK0.png" alt="0eADK0.png"></a></p>
+<p>直接乱码了</p>
+<p>请求目标网站太过直接了</p>
+<p>接下来把request请求网页的方式变更一下</p>
+<p>分析目标网页的请求</p>
+<p><a href="https://imgchr.com/i/0eArrV" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/09/29/0eArrV.png" alt="0eArrV.png"></a></p>
+<p><em>Accept-Encoding<em>，HTTP Header中</em>Accept-Encoding</em> 是浏览器发给服务器,声明浏览器支持的编码类型</p>
+<p>gzip是若干种文件压缩程序的简称（没深入研究）</p>
+<p>重写爬取</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">"http://www.biquge.info/"</span></span><br><span class="line"><span class="keyword">let</span> a = request(&#123;</span><br><span class="line">    url: url,</span><br><span class="line">    method: <span class="string">'get'</span>,</span><br><span class="line">    gzip:<span class="literal">true</span>,<span class="comment">//配置gzip属性</span></span><br><span class="line">    headers:&#123;<span class="comment">//配置headers</span></span><br><span class="line">        <span class="string">"Accept-Encoding"</span>: <span class="string">"gzip,deflate"</span><span class="comment">//模拟请求头好像没用，具体原因不明，还是需要gzip属性</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;, (error, response, body) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(body)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果非常不错，是自己想要的东西了</p>
+<p><a href="https://imgchr.com/i/0eAsbT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/09/29/0eAsbT.png" alt="0eAsbT.png"></a></p>
+<h3 id="使用cheerio-模块解析HTML"><a href="#使用cheerio-模块解析HTML" class="headerlink" title="使用cheerio 模块解析HTML"></a>使用cheerio 模块解析HTML</h3><p><em>cheerio 模块</em>可以在服务器端使用JQuery的方式操作DOM结构,大部分用法和jquery 相似</p>
+<p>具体用法参考百度：<a href="https://baike.baidu.com/item/cheerio/17031205?fr=aladdin" target="_blank" rel="noopener">https://baike.baidu.com/item/cheerio/17031205?fr=aladdin</a></p>
+<p>继续分析目标网页</p>
+<p>可以看到排行榜单的小说最多，那么换排行榜单下手</p>
+<p>改写代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>)</span><br><span class="line"><span class="keyword">var</span> cheerio = <span class="built_in">require</span>(<span class="string">'cheerio'</span>)<span class="comment">//引入cheerio模块</span></span><br><span class="line"><span class="keyword">var</span> url = <span class="string">"http://www.biquge.info/paihangbang_allvisit/1.html"</span><span class="comment">//请求地址变成了榜单第一页</span></span><br><span class="line"><span class="keyword">let</span> a = request(&#123;</span><br><span class="line">    url: url,</span><br><span class="line">    method: <span class="string">'get'</span>,</span><br><span class="line">    gzip:<span class="literal">true</span>,</span><br><span class="line">    headers:&#123;</span><br><span class="line">        <span class="string">"Accept-Encoding"</span>: <span class="string">"gzip,deflate"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;, (error, response, body) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> $ = cheerio.load(body);</span><br><span class="line">    <span class="comment">//分析网页接口，小说的标题久存放在novelslistss li .s2 a的A里面</span></span><br><span class="line">    <span class="keyword">let</span> arr = $(<span class="string">'.novelslistss li .s2 a'</span>).map(<span class="function">(<span class="params">idx, elel</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="comment">//输出你想要的数据</span></span><br><span class="line">            name:$(elel).text()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).get()<span class="comment">//处理类数组.一定要.get,vue用多了就吃jq的亏</span></span><br><span class="line">    <span class="built_in">console</span>.log(arr)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果不错，起码名字都出来了，校花的贴身高手，好牛逼的样子</p>
+<p><a href="https://imgchr.com/i/0eAw2n" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/09/29/0eAw2n.png" alt="0eAw2n.png"></a></p>
+<h3 id="封装函数"><a href="#封装函数" class="headerlink" title="封装函数"></a>封装函数</h3><p>仅仅一个标题没什么好看的，接下来爬取指定页到指定页的小说合集，并且带上其他的信息</p>
+<p>分析翻页可以看出</p>
 <ol>
-<li><p>第一步来到 <code>main.js</code> 中，加入以下配置项：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"><span class="keyword">import</span> ElementUI <span class="keyword">from</span> <span class="string">'element-ui'</span>;</span><br><span class="line"><span class="keyword">import</span> ajax <span class="keyword">from</span> <span class="string">'@/request/ajax'</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'element-ui/lib/theme-chalk/index.css'</span>;</span><br><span class="line"><span class="keyword">import</span> echarts <span class="keyword">from</span> <span class="string">'echarts'</span>;</span><br><span class="line">Vue.prototype.$ajax = ajax</span><br><span class="line"></span><br><span class="line"><span class="comment">//跨域配置,此地的ajax只是一个命名,实际上是自己做过修改的axios</span></span><br><span class="line">ajax.defaults.baseURL = <span class="string">'/api'</span></span><br><span class="line">ajax.defaults.headers.post[<span class="string">'Content-Type'</span>] = <span class="string">'application/json'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = <span class="literal">false</span></span><br><span class="line">Vue.prototype.$echarts = echarts;</span><br><span class="line">Vue.use(ElementUI, &#123;</span><br><span class="line">  size: <span class="string">'medium'</span>,</span><br><span class="line">  zIndex: <span class="number">2000</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">/* eslint-disable no-new */</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  router,</span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<li><p>爬取目标的url地址是<a href="http://www.biquge.info/paihangbang_allvisit/${当前页}.html" target="_blank" rel="noopener">http://www.biquge.info/paihangbang_allvisit/${当前页}.html</a></p>
+</li>
+<li><p>小说的基本信息都可以在类名为novelslistss中的每个li找到</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cheerio = <span class="built_in">require</span>(<span class="string">'cheerio'</span>)</span><br><span class="line"><span class="keyword">var</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*爬取指定页(递归函数)</span></span><br><span class="line"><span class="comment"> *@param&#123;startPage&#125; 从哪一页开始</span></span><br><span class="line"><span class="comment"> *@param&#123;startPage&#125; 到哪一页结束</span></span><br><span class="line"><span class="comment"> *@return &#123;undefined&#125; 无返回值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getNovel</span>(<span class="params">startPage, endPage</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> url = <span class="string">`http://www.biquge.info/paihangbang_allvisit/<span class="subst">$&#123;startPage&#125;</span>.html`</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`开始爬取第<span class="subst">$&#123;startPage&#125;</span>页`</span>)</span><br><span class="line">    <span class="keyword">let</span> res = request(&#123;</span><br><span class="line">        url: url,</span><br><span class="line">        method: <span class="string">'get'</span>,</span><br><span class="line">        gzip: <span class="literal">true</span>,</span><br><span class="line">        headers: &#123;</span><br><span class="line">            <span class="string">"Accept-Encoding"</span>: <span class="string">"gzip,deflate"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, (error, response, body) =&gt; &#123;</span><br><span class="line">        <span class="keyword">let</span> $ = cheerio.load(body);</span><br><span class="line">        <span class="keyword">let</span> arr = $(<span class="string">'.novelslistss li'</span>).map(<span class="function">(<span class="params">idx, elel</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                type: $(elel).children(<span class="string">'.s1'</span>).text(),<span class="comment">//类型</span></span><br><span class="line">                name:$(elel).children(<span class="string">'.s2'</span>).text(),<span class="comment">//小说名称</span></span><br><span class="line">                url:$(elel).children(<span class="string">'.s2'</span>).children(<span class="string">'a'</span>).attr(<span class="string">'href'</span>),<span class="comment">//获取地址</span></span><br><span class="line">                author:$(elel).children(<span class="string">'.s4'</span>).text(),<span class="comment">//作者</span></span><br><span class="line">                state:$(elel).children(<span class="string">'.s7'</span>).text()<span class="comment">//状态</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).get()</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;startPage&#125;</span>页爬取成功,数据如下`</span>)</span><br><span class="line">        <span class="built_in">console</span>.log(...arr.map(<span class="function"><span class="params">item</span>=&gt;</span>item.name+<span class="string">"|"</span>))</span><br><span class="line">        <span class="keyword">if</span>(startPage===endPage) <span class="keyword">return</span>;<span class="comment">//当开始爬取的页面等于结束页的时候return出去</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"开始爬取下一页"</span>);</span><br><span class="line">        getNovel(startPage+<span class="number">1</span>,endPage)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">getNovel(<span class="number">1</span>,<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ol>
-</li>
+<p>爬取结果</p>
+<p><a href="https://imgchr.com/i/0eA0vq" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/09/29/0eA0vq.png" alt="0eA0vq.png"></a></p>
+<h3 id="关于爬虫的合法性"><a href="#关于爬虫的合法性" class="headerlink" title="关于爬虫的合法性"></a>关于爬虫的合法性</h3><ol>
+<li>遵守 Robots 协议，但有没有 Robots 都不代表可以随便爬，可见下面的大众点评百度案；</li>
+<li>限制你的爬虫行为，禁止近乎 DDOS 的请求频率，一旦造成服务器瘫痪，约等于网络攻击；</li>
+<li>对于明显反爬，或者正常情况不能到达的页面不能强行突破，否则是 Hacker 行为；</li>
+<li>最后，审视清楚自己爬的内容，以下是绝不能碰的红线（包括但不限于）：</li>
+</ol>
+<ul>
+<li>爬取用户个人数据非法牟利，包括模拟登录他人账号，如下一案例中操作账号加粉</li>
 </ul>
-<ol start="2">
-<li><p>配置 <code>config</code> 文件下的 <code>index.js</code> ，找到 <code>proxyTable</code> 在此对象中加入以下代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'/api'</span>: &#123;</span><br><span class="line">       target:<span class="string">'https://iflow-api.uc.cn/feiyan'</span>, <span class="comment">// 你请求的第三方接口</span></span><br><span class="line">       changeOrigin:<span class="literal">true</span>, <span class="comment">// 在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样服务端和服务端进行数据的交互就不会有跨域问题</span></span><br><span class="line">       pathRewrite:&#123;  <span class="comment">// 路径重写，</span></span><br><span class="line">         <span class="string">'^/api'</span>: <span class="string">''</span>  <span class="comment">// 替换target中的请求地址，也就是说以后你在请求`https://iflow-api.uc.cn/feiyan/XXXXX这个地址的时候直接写成/xxxx即可。</span></span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>请求示例：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//本来请求地址是https://iflow-api.uc.cn/feiyan/special,现在只用写/special</span></span><br><span class="line"><span class="keyword">this</span>.$ajax.get(<span class="string">'/special'</span>,&#123;</span><br><span class="line">        <span class="string">'uc_param_str'</span>: <span class="string">'pccplomi'</span>,</span><br><span class="line">        <span class="string">'feiyan'</span>: <span class="string">'1'</span>,</span><br><span class="line">        <span class="string">'district'</span>: <span class="string">'1'</span>,</span><br><span class="line">        <span class="string">'tabStart'</span>: <span class="string">'0'</span>,</span><br><span class="line">        <span class="string">'tabEnd'</span>: <span class="string">'1'</span>,</span><br><span class="line">        <span class="string">'tabBrief'</span>:<span class="string">'1'</span>,</span><br><span class="line">        <span class="string">'aid'</span>: <span class="string">'3804775841868884355'</span></span><br><span class="line">      &#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;<span class="comment">//处理数据</span></span><br><span class="line">        <span class="keyword">this</span>.list = res.data.data.feiyan.provinces.map(<span class="function"><span class="params">item</span>=&gt;</span>&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="built_in">Object</span>.assign(item,&#123;<span class="attr">sum</span>:item.sure_cnt-item.die_cnt-item.cure_cnt&#125;)</span><br><span class="line">        &#125;).sort(<span class="function">(<span class="params">item,item2</span>)=&gt;</span>&#123;</span><br><span class="line">          <span class="keyword">return</span> item2.sure_cnt-item.sure_cnt</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ol>
-<p>   然后执行请求可以看到本来是<code>https://iflow-api.uc.cn/feiyan/special</code>的现在变成了<code>http://localhost:8083/api/special</code> 也就是说经过这个配置 api替换了config文件下</p>
-<p>   index.js中target值的地址去开启一个代理，然后访问此路径下的所有接口都只用从<code>https://iflow-api.uc.cn/feiyan/special</code>之后开使写就行了。</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//www.thepaper.cn/newsDetail_forward_2362227">新三板挂牌公司涉窃取30亿条个人信息，非法牟利超千万</a></p>
+<ul>
+<li>爬取商业数据造成不正当竞争，如下一案例中破解并监控竞品 GPS 数据</li>
+</ul>
+<p><a href="https://link.zhihu.com/?target=https%3A//mp.weixin.qq.com/s%3F__biz%3DMzA4MDYxMjczNA%3D%3D%26mid%3D2650020408%26idx%3D1%26sn%3D3c6b07d4477e5d6cf2fe8dab0e7df181%26chksm%3D87a12629b0d6af3f3aba78b82df93d6401c400cab1895bbe58a5e20242c6fa884d0c798fa1b5%26mpshare%3D1%26scene%3D1%26srcid%3D0730mPI095khq7ZQf82dPDSo%23rd">竞争燃藜·深圳中院|利用网络爬虫技术攫取他人数据正当性认定</a></p>
+<ul>
+<li>爬取大量带有知识产权的数据用于商业目的，如下一案例中爬取大量视频内容</li>
+</ul>
+<p><a href="https://link.zhihu.com/?target=http%3A//wenshu.court.gov.cn/content/content%3FDocID%3Dcc5d28b2-ecca-45a9-9409-a85600ef4202">- 全文页 - 中国裁判文书网</a></p>
+<p>最后附上2014年百度地图因大量引用大众点评的评论被起诉，最后法院的判决也说明遵守 Robots 协议并不是没有问题，大量爬取造成的不正当竞争依然会违法。</p>
+<p><a href="https://link.zhihu.com/?target=http%3A//news.163.com/17/0904/22/CTH7P40B000187VE.html">大众点评向百度索赔9000万 法院判赔300万</a></p>
+<p>以上你会发现，爬虫本身并不违法，而是看你使用的方式和目的，还要看是不是商业用途。</p>
+<p>这就像摄影一样，人人都可以拍照，技术宅也可以用无人机满天拍，但如果你拍人家隐私、在禁区里拍、偷拍盗版人家的作品，对不起那是违法。</p>
 
       
     </div>
@@ -504,8 +519,8 @@
         
           
   <h2 class="title">
-    <a href="/2020/06/13/npm%E5%B8%B8%E7%94%A8%E6%96%B9%E5%BC%8F/">
-      npm常用方式
+    <a href="/2020/09/28/%E5%9F%BA%E4%BA%8Eproxy%E4%BB%A3%E7%90%86%E4%B8%8D%E5%90%8C%E5%B0%81%E8%A3%85axios/">
+      基于proxy代理不同封装axios
     </a>
   </h2>
 
@@ -535,7 +550,7 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2020年6月13日</p>
+    <p>发布于：2020年9月28日</p>
   </a>
 </div>
 
@@ -565,52 +580,98 @@
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="npm使用方式"><a href="#npm使用方式" class="headerlink" title="npm使用方式"></a>npm使用方式</h1><h3 id="1-npm常用命令"><a href="#1-npm常用命令" class="headerlink" title="1.npm常用命令"></a>1.npm常用命令</h3><ul>
-<li><p>npm init</p>
-<ul>
-<li>npm init -y  //可以跳过向导，快速生成 </li>
-</ul>
-</li>
-<li><p>npm install</p>
-<ul>
-<li>npm install //一次性把 dependencies选项中的依赖全部安装</li>
-<li>npm install 包名</li>
-<li>npm install 包名 –save //下载并且保存依赖</li>
-<li>简写:npm i 包名 -S 或者npm i  -S 包名</li>
-</ul>
-</li>
-<li><p>npm uninstall 包名</p>
-<ul>
-<li>只删除，如果有依赖项依然会保存</li>
-</ul>
-</li>
-<li><p>npm uninstall –save 包名</p>
-<ul>
-<li>删除同时把依赖信息也去除</li>
-<li>简写：npm un -S 包名</li>
-</ul>
-</li>
-<li><p>npm help</p>
-<ul>
-<li>npm install help //查看install使用帮助</li>
-</ul>
-</li>
-</ul>
-<h3 id="解决-npm-被墙的问题"><a href="#解决-npm-被墙的问题" class="headerlink" title="解决 npm 被墙的问题"></a>解决 npm 被墙的问题</h3><p>npm 的存储包放在国外，有时候会被墙，所以下载速度很慢，可以下载 cnpm解决</p>
-<p>安装淘宝的cnpm(在任意目录下都可以):</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https:<span class="comment">//registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
+        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>个人网站，使用了大量的proxy代理请求，基于axios封装，实现每次根据代理匹配不同的网络请求。</p>
 
-<p>接下来你安装包的时候把之前的 <code>npm</code> 替换成 <code>cnpm</code></p>
-<p>使用案例，比如安装jquery：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm i jquery</span><br><span class="line"><span class="comment">//变为</span></span><br><span class="line">cnpm i jquery</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+      
+    
+  </section>
+</article>
 
-<p>如果不想安装 <code>cnpm</code> 又想使用淘宝的服务器来下载:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install jquery --registry=https:<span class="comment">//registry.npm.taobao.org</span></span><br></pre></td></tr></table></figure>
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <article class="post white-box shadow reveal ">
+  
 
-<p>但是每次都这样手动去加很麻烦，我们可以把这个选项加入配置文件中：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="keyword">set</span> registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
 
-<p>安装完成之后使用 <code>npm config list</code>  查看配置信息，成功后你使用所有的 <code>npm install</code> 都会使用淘宝的服务器来下载。</p>
+  <section class='meta'>
+    
+      
+      
+      <div class="meta" id="header-meta">
+        
+          
+  <h2 class="title">
+    <a href="/2020/09/14/webpack1/">
+      webpack1
+    </a>
+  </h2>
+
+
+        
+        <div class='new-meta-box'>
+          
+            
+          
+            
+              
+<div class='new-meta-item author'>
+  <a href="https://yisage.cn" target="_blank" rel="nofollow noopener">
+    <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3324278405,2511104257&fm=11&gp=0.jpg">
+    <p>伊萨格</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+
+            
+          
+            
+              <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2020年9月14日</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+
+            
+          
+            
+              
+
+            
+          
+            
+          
+        </div>
+        
+          <hr>
+        
+      </div>
+    
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="webpack的作用："><a href="#webpack的作用：" class="headerlink" title="webpack的作用："></a>webpack的作用：</h3><p>编译 JavaScript 模块,通过 webpack 的 <a href="https://www.webpackjs.com/api/cli" target="_blank" rel="noopener">CLI</a> 或 <a href="https://www.webpackjs.com/api/node" target="_blank" rel="noopener">API</a> 与其配合交互</p>
+<h3 id="安装webpack"><a href="#安装webpack" class="headerlink" title="安装webpack:"></a>安装webpack:</h3><p>首先创建一个项目目录，使用 <code>npm init</code>初始化项目</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
       
     </div>
